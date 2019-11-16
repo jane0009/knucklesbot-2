@@ -1,0 +1,26 @@
+{
+    "name": "knucklesbot",
+    "version": "1.0.0",
+    "description": "Knuckles is back babyeee!!!!!",
+    "main": "bot.js",
+    "author": "janeptrv",
+    "license": "GPL-3.0",
+    "dependencies": {
+        "@tensorflow/tfjs-node": "^1.2.5",
+        "brain.js": "^1.6.1",
+        "eris": "^0.10.0",
+        "pg": "^7.11.0",
+        "sequelize": "^5.10.2"
+    },
+    "jshintConfig": {
+        "esversion": 9,
+        "latedef": "nofunc",
+        "maxerr": 100,
+        "unused": true,
+        "node": true,
+        "asi": true
+    },
+    "devDependencies": {
+        "jshint": "^2.10.2"
+    }
+}
