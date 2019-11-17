@@ -2,7 +2,6 @@ const Eris = require('eris');
 const fs = require('fs');
 const path = require('path');
 const sequelize = require('sequelize');
-const brain = require('brain.js');
 //
 var config = require('./config.json');
 var bot = new Eris(config.token);
@@ -12,7 +11,7 @@ var msgQ = [];
 bot.on('ready', () => {
     console.log('logged in');
 });
-global.ctx = { bot: bot, oid: config.oid, settings: { prefix: config.prefix || "knuckles " }, util: {fs: fs, path: path, brain: brain}, sql: { _sequelize: sequelize } };
+global.ctx = { bot: bot, oid: config.oid, settings: { prefix: config.prefix || "knuckles " }, util: {fs: fs, path: path}, sql: { _sequelize: sequelize } };
 ctx.sql._db = new sequelize(config.sql.dbname || 'postgres', config.sql.username || "postgres", config.sql.password || "", {
     host: config.sql.host || 'localhost',
     port: config.sql.port || '5432',
