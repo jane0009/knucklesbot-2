@@ -12,7 +12,7 @@ module.exports = [{
             if (!ctx._chans) ctx._chans = {};
             ctx._chans[msg.channel.id] = c ? c.dataValues.enabled : false;
         }
-        console.log(ctx._chans);
+        //console.log(ctx._chans);
         if (!ctx._chans || !ctx._chans[msg.channel.id]) return;
         msg.channel.sendTyping();
         var dirname = ctx.util.path.join(__dirname, "..", "images");
