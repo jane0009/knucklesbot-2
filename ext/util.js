@@ -60,5 +60,34 @@ module.exports = [{
             await ctx._save_stats();
             process.exit(0);
         }
+    },
+    {
+        'event': 'command',
+        'name': 'eval',
+        'description': 'superdev only',
+        'permission': 3,
+        'execute': async function(ctx, args, msg) {
+            let opt;
+            if (args.includes("bot.token"))
+                args = "\"AAAAAAAAAAAAAAAAAAAAAAAA.AAAAAA._AAAAAAAAAAAAAAAAAAAAAAAAAB\""
+            try {
+                opt = eval(args);
+            }
+            catch (e) {
+                opt = "!! ERROR !! " + e;
+            }
+            if (opt == "" && typeof opt == String) {
+                opt = "no output...";
+            }
+            else if (opt == undefined) {
+                opt = 'undefined';
+            }
+            else if (opt == "") {
+                opt = opt + "";
+            }
+            msg
+                .channel
+                .createMessage("returns: " + opt);
+        }
     }
 ];
