@@ -96,17 +96,13 @@ module.exports = [{
         'description': 'get user stats',
         'permission': 2,
         'execute': async function (ctx, args, msg) {
-            var stats = await ctx.sql._db.models.k_stats.findAll({
-                where: {
-                    uid: msg.author.id
-                }
-            });
+            var stats = ctx._stat_cache[msg.author.id];
             var str = 'stats for ' + msg.author.username + '\n`';
             if (Object.keys(stats).length == 0) {
                 str += "no stats found";   
             }
             for (var value in stats) {
-                str += stats[value].dataValues.stat_name + "\t" + stats[value].dataValues.count + "\n";
+                str += value + "\t" + stats[value] + "\n";
             }
             str += '`';
             if (str.length >= 2000) {

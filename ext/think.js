@@ -14,6 +14,7 @@ module.exports = [{
             ctx._chans[msg.channel.id] = c ? c.dataValues.enabled : false;
         }
         if (!ctx._chans || !ctx._chans[msg.channel.id]) return;
+        if (msg.author.id == ctx.bot.user.id) return;
         train(ctx.util.fs, ctx.util.path, args);
         if (!ctx._net) ctx._net = {};
         if (!ctx._net.cache) ctx._net.cache = await get(ctx.util.fs, ctx.util.path);
@@ -22,6 +23,9 @@ module.exports = [{
         var temp_markov = new Markov(split(ctx._net.cache), size);
         var result = temp_markov.generate();
         if (result.length < 2000) {
+            if (!ctx._stat_cache[msg.author.id]) ctx._stat_cache[msg.author.id] = {}
+            if (!ctx._stat_cache[msg.author.id]['s_talk_to_knuckles']) ctx._stat_cache[msg.author.id]['s_talk_to_knuckles'] = 0;
+            ctx._stat_cache[msg.author.id]['s_talk_to_knuckles']++;
             msg.channel.createMessage(result);
         }
         else {
@@ -43,7 +47,6 @@ async function train(fs, path, t) {
     if (fs && path) {
         let f = await get();
         f += " " + t;
-        console.log(t);
         spread(fs, path, f);
     }
 }
