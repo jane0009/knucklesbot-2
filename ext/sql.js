@@ -16,7 +16,6 @@ const Users_Schema = db.define('k_user', {
 const Stats_Schema = db.define('k_stats', {
     uid: {
         type: sequelize.STRING,
-        primaryKey: true,
         unique: false
     },
     stat_name: {
@@ -44,6 +43,6 @@ const Channels_Schema = db.define('k_chans', {
 });
 
 module.exports = [];
-Users_Schema.sync();
-Stats_Schema.sync();
-Channels_Schema.sync();
+Users_Schema.sync({force: true});
+Stats_Schema.sync({force: true});
+Channels_Schema.sync({force: true});
