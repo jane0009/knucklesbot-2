@@ -2,7 +2,7 @@ var Markov = require('../lib/markov');
 module.exports = [{
     'event': 'messageCreate',
     'disabled': false,
-    'execute': async function (ctx, msg) {
+    'execute': async function(ctx, msg) {
         var args = msg.content.replace('knuckles', '');
         if (!ctx._chans || !ctx._chans[msg.channel.id]) {
             var c = await ctx.sql._db.models.k_chans.findOne({
@@ -14,10 +14,9 @@ module.exports = [{
             ctx._chans[msg.channel.id] = c ? c.dataValues.enabled : false;
         }
         if (!ctx._chans || !ctx._chans[msg.channel.id]) return;
-        train(ctx.util.fs, args);
+        train(ctx.util.fs, ctx.util.path, args);
         if (!ctx._net) ctx._net = {};
-        if (!ctx._net.cache) ctx._net.cache = await get(ctx.util.fs);
-
+        if (!ctx._net.cache) ctx._net.cache = await get(ctx.util.fs, ctx.util.path);
         if (!msg.content.includes('knuckles')) return;
         var size = Math.ceil(Math.random() * args.split(' ').length * 2);
         var temp_markov = new Markov(split(ctx._net.cache), size);
@@ -40,23 +39,20 @@ function shuffle(array) {
     }
     return array;
 }
-
-async function train(fs, t) {
+async function train(fs, path, t) {
     let f = await get();
     f += " " + t;
     console.log(t);
-    spread(fs, f);
+    spread(fs, path, f);
 }
-
-async function scramble(fs) {
+async function scramble(fs, path) {
     let f = await get();
     let a = f.split(" ");
     a = shuffle(a);
     let newf = a.join(" ");
-    spread(fs, newf);
+    spread(fs, path, newf);
 }
-
-async function get(fs) {
+async function get(fs, path) {
     let dir = fs.readdirSync(path.join(__dirname, "training"));
     let f = "";
     for (let d in dir) {
@@ -67,8 +63,7 @@ async function get(fs) {
     //console.log(f);
     return f.trim();
 }
-
-async function spread(fs, t) {
+async function spread(fs, path, t) {
     //console.log(t);
     let emr = /<\s:\s\w+\s:\s\d+\s>/g
     t = t.replace(emr, "")
