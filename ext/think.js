@@ -14,9 +14,9 @@ module.exports = [{
             ctx._chans[msg.channel.id] = c ? c.dataValues.enabled : false;
         }
         if (!ctx._chans || !ctx._chans[msg.channel.id]) return;
-        train(args);
+        train(ctx.util.fs, args);
         if (!ctx._net) ctx._net = {};
-        if (!ctx._net.cache) ctx._net.cache = await get();
+        if (!ctx._net.cache) ctx._net.cache = await get(ctx.util.fs);
 
         if (!msg.content.includes('knuckles')) return;
         var size = Math.ceil(Math.random() * args.split(' ').length * 2);
@@ -41,22 +41,22 @@ function shuffle(array) {
     return array;
 }
 
-async function train(t) {
+async function train(fs, t) {
     let f = await get();
     f += " " + t;
     console.log(t);
-    spread(f);
+    spread(fs, f);
 }
 
-async function scramble() {
+async function scramble(fs) {
     let f = await get();
     let a = f.split(" ");
     a = shuffle(a);
     let newf = a.join(" ");
-    spread(newf);
+    spread(fs, newf);
 }
 
-async function get() {
+async function get(fs) {
     let dir = fs.readdirSync(path.join(__dirname, "training"));
     let f = "";
     for (let d in dir) {
@@ -68,7 +68,7 @@ async function get() {
     return f.trim();
 }
 
-async function spread(t) {
+async function spread(fs, t) {
     //console.log(t);
     let emr = /<\s:\s\w+\s:\s\d+\s>/g
     t = t.replace(emr, "")
