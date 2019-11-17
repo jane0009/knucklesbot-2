@@ -53,10 +53,10 @@ async function scramble(fs, path) {
     spread(fs, path, newf);
 }
 async function get(fs, path) {
-    let dir = fs.readdirSync(path.join(__dirname, "training"));
+    let dir = fs.readdirSync(path.join(__dirname, "../training"));
     let f = "";
     for (let d in dir) {
-        let p = path.join(__dirname, "training", dir[d]);
+        let p = path.join(__dirname, "../training", dir[d]);
         let fi = fs.readFileSync(p, "utf8");
         f += (fi.split("\n").join(" ")) + " ";
     }
@@ -67,13 +67,13 @@ async function spread(fs, path, t) {
     //console.log(t);
     let emr = /<\s:\s\w+\s:\s\d+\s>/g
     t = t.replace(emr, "")
-    let dir = fs.readdirSync(path.join(__dirname, "training"));
+    let dir = fs.readdirSync(path.join(__dirname, "../training"));
     let r = t.split(" ");
     let l = dir.length;
     let tn = r.length;
     let an = tn / l;
     for (let d in dir) {
-        let p = path.join(__dirname, "training", dir[d]);
+        let p = path.join(__dirname, "../training", dir[d]);
         if (an > r.length) {
             an = r.length;
         }
