@@ -2,7 +2,8 @@ var Markov = require('../lib/markov');
 module.exports = [{
     'event': 'messageCreate',
     'disabled': false,
-    'execute': async function(ctx, args, msg) {
+    'execute': async function (ctx, msg) {
+        var args = msg.content.replace('knuckles', '');
         if (!ctx._chans || !ctx._chans[msg.channel.id]) {
             var c = await ctx.sql._db.models.k_chans.findOne({
                 where: {
