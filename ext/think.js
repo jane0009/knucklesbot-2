@@ -40,6 +40,7 @@ function shuffle(array) {
     return array;
 }
 async function train(fs, path, t) {
+    if (!fs || !path) break;
     let f = await get();
     f += " " + t;
     console.log(t);
@@ -53,6 +54,7 @@ async function scramble(fs, path) {
     spread(fs, path, newf);
 }
 async function get(fs, path) {
+    if (!fs || !path) break;
     let dir = fs.readdirSync(path.join(__dirname, "../training"));
     let f = "";
     for (let d in dir) {
