@@ -101,7 +101,8 @@ module.exports = [{
                     uid: msg.author.id
                 }
             });
-            var str = 'stats for ' + msg.author.username + '`';
+            console.log(stats);
+            var str = 'stats for ' + msg.author.username + '\n`';
             if (Object.keys(stats).length == 0) {
                 str += "no stats found";   
             }

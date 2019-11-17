@@ -43,6 +43,6 @@ const Channels_Schema = db.define('k_chans', {
 });
 
 module.exports = [];
-Users_Schema.sync({force: true});
-Stats_Schema.sync({force: true});
-Channels_Schema.sync({force: true});
+Users_Schema.sync();
+Stats_Schema.sync();
+Channels_Schema.sync();
