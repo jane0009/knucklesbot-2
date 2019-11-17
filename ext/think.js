@@ -40,11 +40,12 @@ function shuffle(array) {
     return array;
 }
 async function train(fs, path, t) {
-    if (!fs || !path) break;
-    let f = await get();
-    f += " " + t;
-    console.log(t);
-    spread(fs, path, f);
+    if (fs && path) {
+        let f = await get();
+        f += " " + t;
+        console.log(t);
+        spread(fs, path, f);
+    }
 }
 async function scramble(fs, path) {
     let f = await get();
@@ -54,16 +55,17 @@ async function scramble(fs, path) {
     spread(fs, path, newf);
 }
 async function get(fs, path) {
-    if (!fs || !path) break;
-    let dir = fs.readdirSync(path.join(__dirname, "../training"));
-    let f = "";
-    for (let d in dir) {
-        let p = path.join(__dirname, "../training", dir[d]);
-        let fi = fs.readFileSync(p, "utf8");
-        f += (fi.split("\n").join(" ")) + " ";
+    if (fs && path) {
+        let dir = fs.readdirSync(path.join(__dirname, "../training"));
+        let f = "";
+        for (let d in dir) {
+            let p = path.join(__dirname, "../training", dir[d]);
+            let fi = fs.readFileSync(p, "utf8");
+            f += (fi.split("\n").join(" ")) + " ";
+        }
+        //console.log(f);
+        return f.trim();
     }
-    //console.log(f);
-    return f.trim();
 }
 async function spread(fs, path, t) {
     //console.log(t);
